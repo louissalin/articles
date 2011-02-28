@@ -1,0 +1,70 @@
+h1. Cost of Delay in software development
+
+I apologize for the lack of technical content in this post. Instead, I thought I'd write about a subject that has interested me for about a year now and that I've finally begun to understand: how to put a dollar amount on any process improvement made in your software shop. I'm sure you've heard of lean software development. Lean is how I got got interested initially. Because of Lean, I learned about cycle time and the continuous flow for stories across a task board. I learned about waste and how it should be eliminated. But no matter what I read on the subject, I never saw how the Lean principles affected the bottom line. It all seemed like a gut feeling to me. I felt certain that the methods would work; how can you argue against eliminating waste, after all? But measuring the improvement was somewhat lacking. On top of that, Lean is taken from a manufacturing world that doesn't translate very well to our world, where changing requirements is the only certainty.
+
+In this post, I'd like to explore what the cost of delay is and how it can be used to measure the cost/benefit ratio of process improvement efforts.
+
+h2. What is product development?
+
+As mentioned above, software developers are not building cars. The principles of lean manufacturing don't really apply to software development because in manufacturing, designs don't change once they go to production. It is much easier to draw parallels between the design process of a car and software development. Writing software, in a way, is a design process. It starts when the first stories are written down and it ends when the app is deployed. The act of writing code is part of the design process because developers are still producing the blue print of the product. When we sling code, we are modeling our customer's reality in binary format and as long as we don't know the behavior of the app in its entirety, we're still designing. We're developing a product.
+
+Enters Product Development Flow ==[7]==, by Donald Reinersten. Product development is the set of activities that take place in order to create an intangible product like sheet music, movies scripts, engineering designs, and software. In Product Development Flow, the Reinersten presents a list of principles that are specific to design activities and not unlike those seen in Lean or Agile methodologies: shorter batch sizes, monitoring queues and eliminating waste, etc. The novelty, however, is in how the author has managed to calculate what in Agile or Lean are just gut feelings. In fact, all three of Reinersten books start with a chapter on how important it is to have an economic framework in place so that we can measure the impact of our actions, and this economic framework has at its core the Cost of Delay.
+
+h2. A common unit of measure
+
+In order to be able to measure metrics and compare them, we must first have a common unit of measure. And that unit of measure must mean something to everyone, including upper management. A lot of people like to calculate and reduce the average cycle time of stories, which is the time a story spends between the moment work begins until it is completely done. But when it comes time to justify purchasing newer, faster machines, or expensive software, we can't use the increase in cycle time as justification, because we are not able to translate the cycle time into an increase in profits for the company. Or in slashdot terms ==[8]==:
+
+# Reduce cycle time
+# ?
+# Profit!
+
+This is where the cost of delay comes in. In a nutshell, the cost of delay is the difference in profits made by the company if the software was delayed by a month. Given a perfect scenario where all your features are released on time, your app will make the company a certain amount of money. However, by delaying the release by one month, the company is now deprived of one month's worth of revenue. With that difference in profits calculated, you can now use it to measure the real benefits of shorter cycle times. If you can show that reducing the cycle time per story allows you to release the app sooner, then you can show how it impacts the bottom line. You can even start measuring the impact of a failed nightly deploy and how spending a few days improving the build system will save the company money.
+
+In other words, the cost of delay allows the company to make tradeoffs that are economically viable.
+
+So how does one go about calculating that cost? Well, it's not that hard, but unless you are a one man enterprise, input from other departments will be needed. As was mentioned earlier, the cost of delay is the difference between the money the company would make if the product is released on time, and the money the company would make if the product is late. To calculate that amount of money, you need to create a profit and loss (P&L) statement.
+
+In another one of his books: Develop Products in Half the Time ==[10]==, Reinersten provides four P&L statements, two of which are of interest to us. The first one represents the ideal scenario. It's the baseline that will be used to calculate the cost of delay. The other one is a P&L with a six months delay in market introduction. After calculating the differences in profits before tax, it is easy to know if performance issues are more important than delays to market introduction.
+
+How you create these profit and loss statements depends on your organization. You will need input from the sales team, the marketing team, the customer support team and from the production team. I'm fairly certain that your company already has a P&L statement prepared for the product you're developing which you can certainly use as a baseline, but you'll need to get every one in a room to help do the other statements. 
+
+h2. Cost of Delay in a Software World
+
+Software is special. It's a product that we spend our time designing and that hardly costs a dime to manufacture. Once finished, the production cost of software is essentially zero. Software makers also have different revenue streams: baseline unit price, yearly or monthly maintenance subscriptions, charging for support, upgrade fees, etc. All of these will need to taken into account when creating the P&L statements since they all affect the bottom line. Additionally, we tend to keep piling on features on top of existing software, unlike other products where new iterations yield entirely new products. In this case, you might need to keep track of the existing user base in your statements and how it grows, especially when maintenance fees are involved. During this exercise, I suggest that each new feature gets its own P&L statement and all these costs of delay be averaged to create a release wide cost of delay for the current application. Note that a feature is not the same as a story, however. There is no need to go down to the story level when working on your statements. 
+
+***********************************
+
+Software is also special in how and when it gets released. Some products are released every few years, like the Windows operating system. Others are released on a fixed time frame, like the Ubuntu linux distribution, which is released every six months. Some web applications follow a continuous deployment model, where every feature is deployed as soon as it is done. These different ways of releasing software will impact the P&L in some way. Let's say your company releases a new version of the app on January 1st, every year. Then there will never be a delay. However, features can miss a release if they unexpectedly take long to code and will thus have to wait a full year before the customers can use them. This will definetely impact the bottom line. 
+
+With that being said, what do we need to keep track of on our P&L statements?
+
+# The average sales price of the software per license
+# The maintenance fee per license, or the subscription fee
+# The unit sales, or how many licenses are expected to be sold during the period, or how many new subscriptions are we expecting
+# The percentage of users on maintenance
+# The dollar sales, or the unit sales times the average sales price plus the percentage of users on maintenance times the maintenance fee
+# Operating expenses
+# Profit before tax (PBT)
+
+** TODO: do example **
+
+h2. Using the cost of delay
+
+But isn't the cost of delay simply delayed earnings? Isn't it a cost that the company will recoup over time once the organization has a chance to catch up on missed opportunities? Well, no. The delay experienced by your organization isn't experienced by the rest of the world. Life continues; customers switch to new products and find solutions to their problems that won't involve your company. Competitors come up with similar products, too. Plus, an early release can generate momentum that will be harder to gain with delays, simply because of the lock-in that software typically imposes on the customers. Software development is a marathon, and regaining the lead requires a much harder effort than simply keeping the pace. Thus, regaining what was lost due to the delay will be hard.
+
+This cost of delay can now be used for calculating the real benefits process improvements will bring to the company. If queues are being monitored, than queue size will affect the cost of delay in a way that will allow you to find the optimium size for each queue. If your build times are too long because of slow servers, you can compute the exact cost to the company and show how the price of a new server will reduce the cost of delay and would therefore be a proper investment for the organization.
+
+The cost of delay can also be used for prioritizing features. This requires that you have done the exercise above for each features, however. But once done, you can prioritize work based on the cost of delay by doing the highest first. As the product is developed, new ideas will come in that might have higher cost of delays than current work in process. If the cost of delay is significantly higher, it might be a wise economic decision to dump the current work and start working on the newer feature instead.
+
+h2. References
+
+# ** find link that talks about how waterfall wasn't intended **
+# ** agile manifesto **
+# wikipedia, http://en.wikipedia.org/wiki/Lean_software_development
+# ** ref to Lean Software dev by Poppendieck ** 
+# ** ref toyota way **
+# ** ref to Eric Ries blog **
+# ** ref to Product dev flow **
+# ** find link to the 1. do this, 2. ??, 3. Profit -- explanation
+# ** find a link to creating P&L statements
+# ** ref to 1st Reinersten book **
