@@ -1,0 +1,28 @@
+h1. Auto Updating Desktop Application
+
+Talk to any web developer and they'll tell you how the web has simplified the deployment story. Truly, there is nothing simpler than copying your app over to the web server and the user doesn't have to be involved in the upgrade process at all. On the other hand, the deployment and update stories for desktop applications is usually a little more involved for both the developer and the user. In the worst possible scenario, the user must first uninstall the existing app, then download an installer for the new version and install it manually. Slightly better is the installer that overwrites the previous install, thus removing one step in the upgrade for the user. And I think we can all agree that the best upgrade user experience is for the app to simply update itself in the background without the user knowing about it.
+
+It's with this in mind that I started writing a small desktop app that would update itself. I decided to start out very simply and let this thing evolve over time. For now, all I want to do is build a minimal app that can only do a very basic thing: check for a new version of the main DLL library, download it and run it. To get the ball rolling, I created a small Linode server that I'm using to store my app DLL. This server will also act as a REST server to query the version of the DLL and as a database server so I can compile some metrics, but at the moment, it'll simply be used as a file server.
+
+(show image with Linode server with overlaping cloud representing a Rest service that returns version of DLL. Show computer ask rest service for version and download dll)
+
+The trick now is to have a deploy script that build the app and copies the DLL to Linode. By the way, I've been watching the most excellent videos series "Play by Play":http://peepcode.com/products/play-by-play-bernhardt on "Peepcode":http://peepcode.com/ and I've learned in the latest installment that getting started on your deployment story early and evolving it as you go is better than doing it all at once at the end. This seemed like good advice to follow so I wrote a simple makefile (yes, I'm on Linux) that can easily build and deploy the DLL:
+
+(show makefile image)
+
+This makefile has three tasks: 
+# build the app in debug mode using xbuild, the equivalent of msbuild on Mono
+# build the app in release mode
+# deploy the app
+
+The deploy task depends on the release task, which will execute first. Then the makefile will run the two scp commands. Scp is a command line utility that is used to copy files to servers via SSH. Normally, scp would prompt you for a user name and password, which is not something I want if I want to have an automated deploy story. So I set up a pair of RSA keys and copied my public key to the Linode server. Now executing the scp commands is seemless and my DLL is copied every single time I type in "make deploy" on the command line.
+
+Now back in my main application code, all I need to do is to download the DLL and load it.
+
+(show img of download code)
+
+I'm using SharpSSH, a C# port of a Java library that abstracts SSH tasks, including file copying using the Scp class. This lets me download the DLL in exactly the same way I uploaded it, via a secured channel, to prevent man in the middle attacks.
+
+(show img of dynamic code)
+
+Finally, I load the DLL dynamically. This frees me from having to cast the object to a common interface. As long as my object responds to the ShowAll method, it'll run. I've now got a basic skeleton of an auto updating app. The next step will be to increment a version number every time the DLL is deployed and to create a web service that can be used to query the deployed DLL's version and only download it when necessary.
